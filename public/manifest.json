@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Football Player Finder",
+  "name": "Football Player Finder",
   "icons": [
     {
       "src": "favicon.ico",

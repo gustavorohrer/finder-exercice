@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Finder from "./components/Finder";
 
 const App = () => (
@@ -6,9 +6,9 @@ const App = () => (
     <div className="header">
       <h2>Football Player Finder</h2>
     </div>
-    <br/>
-    <br/>
-    <Finder/>
+    <br />
+    <br />
+    <Finder />
   </div>
 );
 

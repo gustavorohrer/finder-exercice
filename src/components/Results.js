@@ -1,11 +1,6 @@
 import React from "react";
 
-const Results = ({ players }) => {
-  const getAge = dateOfBirth => {
-    const diff = new Date() - new Date(dateOfBirth);
-    return Math.floor(diff / 31557600000);
-  };
-
+const Results = ({ players, getAge }) => {
   return (
     <div className="results">
       {!players.length ? (
@@ -23,7 +18,7 @@ const Results = ({ players }) => {
           <tbody>
             {players.map(player => {
               return (
-                <tr>
+                <tr key={player.name + player.position}>
                   <td>{player.name}</td>
                   <td>{player.position}</td>
                   <td>{player.nationality}</td>

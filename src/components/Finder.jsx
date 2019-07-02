@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Results from "./Results";
-import Form from "./form";
+import Form from "./Form";
 import { calculateAgeFromDateOfBirth } from "../utils/date";
 
 const Finder = () => {

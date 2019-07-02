@@ -6,8 +6,6 @@ const App = () => (
     <div className="header">
       <h2>Football Player Finder</h2>
     </div>
-    <br />
-    <br />
     <Finder />
   </div>
 );

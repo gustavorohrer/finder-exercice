@@ -16,13 +16,13 @@ const Results = ({ players }) => {
             </tr>
           </thead>
           <tbody>
-            {players.map(player => {
+            {players.map(({ name, position, nationality, age }) => {
               return (
-                <tr key={player.name + player.position}>
-                  <td>{player.name}</td>
-                  <td>{player.position}</td>
-                  <td>{player.nationality}</td>
-                  <td>{player.age}</td>
+                <tr key={name + position}>
+                  <td>{name}</td>
+                  <td>{position}</td>
+                  <td>{nationality}</td>
+                  <td>{age}</td>
                 </tr>
               );
             })}

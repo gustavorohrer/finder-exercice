@@ -1,6 +1,6 @@
 import React from "react";
 
-const Results = ({ players, getAge }) => {
+const Results = ({ players }) => {
   return (
     <div className="results">
       {!players.length ? (
@@ -22,7 +22,7 @@ const Results = ({ players, getAge }) => {
                   <td>{player.name}</td>
                   <td>{player.position}</td>
                   <td>{player.nationality}</td>
-                  <td>{getAge(player.dateOfBirth)}</td>
+                  <td>{player.age}</td>
                 </tr>
               );
             })}

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Results from "./Results";
 import Form from "./Form";
 import { calculateAgeFromDateOfBirth } from "../utils/date";
+import initPlayers from "../actionCreator/initPlayers";
 
-const Finder = () => {
-  const [players, setPlayers] = useState([]);
+const Finder = ({ players, dispatch }) => {
   const [filteredPlayers, setFilteredPlayers] = useState([]);
   const [playersPositions, setPlayersPositions] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
@@ -19,7 +20,7 @@ const Finder = () => {
           ...player,
           age: calculateAgeFromDateOfBirth(player.dateOfBirth)
         }));
-        setPlayers(mappedPlayers);
+        initPlayers(mappedPlayers);
         setFilteredPlayers(mappedPlayers);
         setIsFetching(false);
         setPlayersPositions([...new Set(data.map(player => player.position))]);
@@ -55,4 +56,8 @@ const Finder = () => {
   );
 };
 
-export default Finder;
+const mapStateToProps = ({ players }) => ({
+  players
+});
+
+export default connect(mapStateToProps)(Finder);

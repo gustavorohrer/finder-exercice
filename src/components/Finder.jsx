@@ -4,9 +4,9 @@ import Results from "./Results";
 import Form from "./Form";
 import { calculateAgeFromDateOfBirth } from "../utils/date";
 import initPlayers from "../actionCreator/initPlayers";
+import filterPlayers from "../actionCreator/filterPlayers";
 
-const Finder = ({ players, dispatch }) => {
-  const [filteredPlayers, setFilteredPlayers] = useState([]);
+const Finder = ({ players, initPlayers, filterPlayers }) => {
   const [playersPositions, setPlayersPositions] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -21,17 +21,16 @@ const Finder = ({ players, dispatch }) => {
           age: calculateAgeFromDateOfBirth(player.dateOfBirth)
         }));
         initPlayers(mappedPlayers);
-        setFilteredPlayers(mappedPlayers);
         setIsFetching(false);
         setPlayersPositions([...new Set(data.map(player => player.position))]);
       })
       .catch(err => {
         console.error(err);
       });
-  }, []);
+  }, [initPlayers]);
 
-  const filterPlayers = ({ playerName, playerPosition, playerAge }) => {
-    setFilteredPlayers(
+  const doFilterPlayers = ({ playerName, playerPosition, playerAge }) => {
+    filterPlayers(
       players.filter(player => {
         return (
           (!playerName ||
@@ -48,10 +47,8 @@ const Finder = ({ players, dispatch }) => {
 
   return (
     <div className="finder">
-      <div className="filter-bar">
-        <Form onSubmit={filterPlayers} playersPositions={playersPositions} />
-      </div>
-      {!isFetching ? <Results players={filteredPlayers} /> : "Loading..."}
+      <Form onSubmit={doFilterPlayers} playersPositions={playersPositions} />
+      {!isFetching ? <Results players={players} /> : "Loading..."}
     </div>
   );
 };
@@ -60,4 +57,16 @@ const mapStateToProps = ({ players }) => ({
   players
 });
 
-export default connect(mapStateToProps)(Finder);
+const mapDispatchToProps = dispatch => ({
+  initPlayers(players) {
+    dispatch(initPlayers(players));
+  },
+  filterPlayers(players) {
+    dispatch(filterPlayers(players));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Finder);

@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import useDropdownFilter from "../customHooks/useDropdownFilter";
+import setPlayerFilter from "../actionCreator/setPlayerFilter";
+import { connect } from "react-redux";
 
 const Form = props => {
   const [playerName, setPlayerName] = useState("");
-  const [playerAge, setPlayerAge] = useState("");
-
   const [playerPosition, PositionDropdownFilter] = useDropdownFilter(
     "Position",
     props.playersPositions
   );
-
-  function onSubmitHandler(e) {
-    e.preventDefault();
-    props.onSubmit({ playerName, playerPosition, playerAge });
-  }
+  const [playerAge, setPlayerAge] = useState("");
 
   function nameHandler({ target: { value } }) {
     return setPlayerName(value);
@@ -21,6 +17,11 @@ const Form = props => {
 
   function ageHandler({ target: { value } }) {
     return setPlayerAge(value);
+  }
+
+  function onSubmitHandler(e) {
+    e.preventDefault();
+    props.setPlayerFilter({ playerName, playerPosition, playerAge });
   }
 
   return (
@@ -48,4 +49,19 @@ const Form = props => {
   );
 };
 
-export default Form;
+const mapStateToProps = ({ players }) => {
+  return {
+    playersPositions: [...new Set(players.map(player => player.position))]
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  setPlayerFilter(filter) {
+    dispatch(setPlayerFilter(filter));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form);

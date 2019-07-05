@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const Results = ({ players }) => {
+const Results = ({ filteredPlayers }) => {
   return (
     <div className="results">
-      {!players.length ? (
+      {!filteredPlayers.length ? (
         <h1>No Players Found</h1>
       ) : (
         <table>
@@ -16,7 +17,7 @@ const Results = ({ players }) => {
             </tr>
           </thead>
           <tbody>
-            {players.map(({ name, position, nationality, age }) => {
+            {filteredPlayers.map(({ name, position, nationality, age }) => {
               return (
                 <tr key={name + position}>
                   <td>{name}</td>
@@ -33,4 +34,25 @@ const Results = ({ players }) => {
   );
 };
 
-export default Results;
+const getFilteredPlayers = (players, filter) => {
+  return players.filter(player => {
+    return (
+      (!filter.playerName ||
+        player.name.toLowerCase().indexOf(filter.playerName.toLowerCase()) >
+          -1) &&
+      (!filter.playerPosition ||
+        player.position
+          .toLowerCase()
+          .indexOf(filter.playerPosition.toLowerCase()) > -1) &&
+      (!filter.playerAge || Number(filter.playerAge) === player.age)
+    );
+  });
+};
+
+const mapStateToProps = ({ players, searchFilter }) => {
+  return {
+    filteredPlayers: getFilteredPlayers(players, searchFilter)
+  };
+};
+
+export default connect(mapStateToProps)(Results);

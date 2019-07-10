@@ -55,11 +55,9 @@ const mapStateToProps = ({ players }) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setPlayerFilter(filter) {
-    dispatch(setPlayerFilter(filter));
-  }
-});
+const mapDispatchToProps = {
+  setPlayerFilter
+};
 
 export default connect(
   mapStateToProps,

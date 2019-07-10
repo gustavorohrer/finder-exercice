@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import Results from "./Results";
 import Form from "./Form";
 import { calculateAgeFromDateOfBirth } from "../utils/date";
-import initPlayers from "../actionCreator/initPlayers";
+import setPlayers from "../actionCreator/setPlayers";
 
-const Finder = ({ initPlayers }) => {
+const Finder = ({ setPlayers }) => {
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -18,13 +18,13 @@ const Finder = ({ initPlayers }) => {
           ...player,
           age: calculateAgeFromDateOfBirth(player.dateOfBirth)
         }));
-        initPlayers(mappedPlayers);
+        setPlayers(mappedPlayers);
         setIsFetching(false);
       })
       .catch(err => {
         console.error(err);
       });
-  }, [initPlayers]);
+  }, [setPlayers]);
 
   return (
     <div className="finder">
@@ -34,11 +34,9 @@ const Finder = ({ initPlayers }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  initPlayers(players) {
-    dispatch(initPlayers(players));
-  }
-});
+const mapDispatchToProps = {
+  setPlayers
+};
 
 export default connect(
   null,
